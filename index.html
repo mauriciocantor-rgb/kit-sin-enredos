@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kit Sin Enredos de Mauricio Cantor: Cítalo, Ref Express y ¿Hace match?, herramientas gratuitas para citar y referenciar en APA 7.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FF6B5B'/%3E%3Cpath d='M14 44V22l9 12 9-12v22' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M51 26a10 10 0 1 0 0 14' fill='none' stroke='%232EC4B6' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='51' cy='14' r='5' fill='%23FFC94A'/%3E%3C/svg%3E">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Kit Sin Enredos · Mauricio Cantor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: barra de marca + pestañas por herramienta (#inicio, #arma, #chequeo); asistente con vista previa fija al lado, que baja en celular */
+:root{
+  --coral:#FF6B5B; --coral-d:#E2483A; --menta:#2EC4B6; --menta-d:#13968A; --menta-dd:#0E7C72;
+  --sol:#FFC94A; --tinta:#1D2433; --mut:#55607A; --fondo:#F2FAF8; --card:#FFFFFF; --linea:#D9ECE8;
+  --suave-coral:#FFF0EE; --suave-menta:#E6F7F4; --suave-sol:#FFF6DB; --texto:#1D2433; --sobre:#FFFFFF;
+  --f-disp:"Baloo 2","Nunito",system-ui,sans-serif; --f-body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --fondo:#121823; --card:#1B2230; --linea:#2B3547; --texto:#EEF3F7; --mut:#A7B1C6;
+  --suave-coral:#3A2426; --suave-menta:#173430; --suave-sol:#3A321B; --menta-d:#4FD6C9; --coral-d:#FF8A7D; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --fondo:#121823; --card:#1B2230; --linea:#2B3547; --texto:#EEF3F7; --mut:#A7B1C6;
+  --suave-coral:#3A2426; --suave-menta:#173430; --suave-sol:#3A321B; --menta-d:#4FD6C9; --coral-d:#FF8A7D; color-scheme:dark }
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--texto);font-family:var(--f-body);font-size:16px;line-height:1.5}
+h1,h2,h3{font-family:var(--f-disp);margin:0;line-height:1.1;text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--menta);outline-offset:2px;border-radius:8px}
+.w{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Marca */
+header{padding-block:16px 6px}
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand svg{width:48px;height:48px;flex:none}
+.brand b{font-family:var(--f-disp);font-size:24px;font-weight:800;display:block;line-height:1}
+.brand small{color:var(--mut);font-weight:700;font-size:14px}
+.brand .yt{margin-left:auto;text-decoration:none;font-weight:800;font-size:14px;color:var(--sobre);background:var(--coral);padding:8px 14px;border-radius:12px;box-shadow:0 3px 0 var(--coral-d)}
+nav{display:flex;gap:6px;flex-wrap:wrap;padding-block:14px}
+nav a{text-decoration:none;font-weight:800;font-size:15px;color:var(--mut);padding:8px 14px;border-radius:99px;border:2px solid transparent}
+nav a[aria-current="page"]{background:var(--card);color:var(--texto);border-color:var(--linea)}
+
+/* Inicio */
+.hero{background:var(--card);border:2px solid var(--linea);border-radius:28px;padding:28px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;background:var(--sol);opacity:.3}
+.hero h1{font-size:clamp(30px,5vw,44px);max-width:20ch;position:relative}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.hero p{color:var(--mut);max-width:58ch;margin:10px 0 0;position:relative}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;padding-block:18px 8px}
+.tool{background:var(--card);border:2px solid var(--linea);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit}
+.tool:hover{border-color:var(--menta)}
+.tool .ico{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-family:var(--f-disp);font-weight:800;font-size:24px;color:var(--sobre)}
+.tool h2{font-size:26px}
+.tool p{margin:0;color:var(--mut)}
+.tool .go{margin-top:auto;font-weight:800;color:var(--menta-d)}
+.tool .pill{align-self:flex-start}
+.pill{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--suave-menta);color:var(--menta-d)}
+
+/* Asistente */
+.grid2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:start;padding-block:4px 24px}
+.panel{background:var(--card);border:2px solid var(--linea);border-radius:24px;padding:22px;min-width:0}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding:0;list-style:none}
+.steps button{border:2px solid var(--linea);background:transparent;border-radius:12px;padding:6px 10px;font-weight:800;font-size:13px;color:var(--mut);cursor:pointer;display:flex;align-items:center;gap:6px}
+.steps button span{width:20px;height:20px;border-radius:7px;display:grid;place-items:center;background:var(--linea);color:var(--texto);font-size:12px}
+.steps button[aria-current="step"]{border-color:var(--coral);color:var(--texto)}
+.steps button[aria-current="step"] span{background:var(--coral);color:var(--sobre)}
+.steps button.done span{background:var(--menta);color:var(--sobre)}
+.paso h2{font-size:26px;margin-bottom:4px}
+.paso .ayuda{color:var(--mut);margin:0 0 14px;font-size:15px}
+.tipos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.tipos label{border:2px solid var(--linea);border-radius:16px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;font-weight:700}
+.tipos label small{display:block;color:var(--mut);font-weight:600;font-size:13px}
+.tipos input{accent-color:var(--coral);margin-top:4px}
+.tipos label:has(input:checked){border-color:var(--coral);background:var(--suave-coral)}
+.sit label{border:2px solid var(--linea);border-radius:16px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;font-weight:700}
+.sit label small{display:block;color:var(--mut);font-weight:600;font-size:13px}
+.sit input{accent-color:var(--coral);margin-top:4px}
+.sit label:has(input:checked){border-color:var(--coral);background:var(--suave-coral)}
+.campos{display:grid;gap:12px}
+.fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:10px}
+.f label{display:block;font-weight:800;font-size:14px;margin-bottom:4px}
+.f small{display:block;color:var(--mut);font-size:12.5px;margin-top:3px}
+input[type=text],input[type=url],select,textarea{width:100%;background:var(--fondo);border:2px solid var(--linea);border-radius:12px;padding:9px 12px}
+input:focus,select:focus,textarea:focus{border-color:var(--menta);outline:none}
+.autor{border:2px dashed var(--linea);border-radius:16px;padding:12px;display:grid;gap:10px}
+.autor .top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.autor .top b{font-family:var(--f-disp);font-size:18px}
+.seg{display:inline-flex;border:2px solid var(--linea);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:4px 10px;font-weight:800;font-size:13px;cursor:pointer;color:var(--mut)}
+.seg button[aria-pressed="true"]{background:var(--menta);color:var(--sobre)}
+.btn{border:0;border-radius:14px;padding:10px 16px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.pri{background:var(--coral);color:var(--sobre);box-shadow:0 4px 0 var(--coral-d)}
+.btn.pri:active{transform:translateY(2px);box-shadow:0 2px 0 var(--coral-d)}
+.btn.sec{background:var(--suave-menta);color:var(--menta-d)}
+.btn.min{background:transparent;color:var(--coral-d);padding:4px 8px}
+.nav-pasos{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.chk{display:flex;align-items:center;gap:8px;font-weight:700}
+.chk input{accent-color:var(--coral);width:18px;height:18px}
+
+/* Vista previa */
+.preview{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+.preview h3{font-size:20px;margin-bottom:10px}
+.refbox{background:var(--fondo);border:2px solid var(--linea);border-radius:16px;padding:16px 16px 16px 2.6em;text-indent:-1.27cm;padding-left:calc(16px + 1.27cm);font-size:16px;overflow-wrap:anywhere}
+.refbox .a{background:var(--suave-coral);border-radius:4px}
+.refbox .d{background:var(--suave-sol);border-radius:4px}
+.refbox .t{background:var(--suave-menta);border-radius:4px}
+.refbox .l{color:var(--menta-d)}
+.leyenda{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;padding:0;list-style:none;font-size:13px;font-weight:700;color:var(--mut)}
+.leyenda li{display:flex;align-items:center;gap:6px}
+.leyenda i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.citas{display:grid;gap:10px;margin-top:16px}
+.cita{border:2px solid var(--linea);border-radius:14px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cita small{display:block;color:var(--mut);font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.cita div{min-width:0;overflow-wrap:anywhere}
+.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.estado{font-size:13px;font-weight:700;color:var(--menta-d)}
+.avisos{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.avisos li{background:var(--suave-sol);border-radius:10px;padding:7px 10px;font-size:14px}
+.ejemplo{font-size:13px;font-weight:700;color:var(--mut);margin:0 0 12px}
+
+/* Chequeo */
+.ch-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+textarea{min-height:240px;resize:vertical;line-height:1.55}
+.resumen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px;margin-top:16px}
+.res{border-radius:16px;padding:12px 14px;border:2px solid var(--linea);background:var(--card)}
+.res b{font-family:var(--f-disp);font-size:34px;line-height:1;display:block;font-variant-numeric:tabular-nums}
+.res span{font-weight:700;font-size:14px;color:var(--mut)}
+.res.ok b{color:var(--menta-d)} .res.mal b{color:var(--coral-d)}
+.lista{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.lista li{background:var(--fondo);border-left:4px solid var(--coral);border-radius:8px;padding:7px 10px;overflow-wrap:anywhere}
+.lista.ok li{border-left-color:var(--menta)}
+.lista.aviso li{border-left-color:var(--sol)}
+.resultado h3{font-size:20px;margin-top:18px}
+.marcado{background:var(--fondo);border:2px solid var(--linea);border-radius:16px;padding:14px;margin-top:10px;white-space:pre-wrap;overflow-wrap:anywhere}
+mark{border-radius:4px;padding:0 2px;color:inherit}
+mark.ok{background:var(--suave-menta)} mark.mal{background:var(--suave-coral);text-decoration:underline wavy var(--coral)}
+
+footer{border-top:2px solid var(--linea);padding-block:18px 32px;color:var(--mut);font-size:14px;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+footer b{color:var(--texto)}
+.correo{user-select:all;font-weight:700;color:var(--texto)}
+
+.sit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.bloque{margin:10px 0 0;padding:12px 16px 12px 1.27cm;border-left:4px solid var(--menta);background:var(--fondo);border-radius:0 12px 12px 0;overflow-wrap:anywhere}
+.en-texto{background:var(--fondo);border:2px solid var(--linea);border-radius:16px;padding:14px 16px;margin-top:16px;overflow-wrap:anywhere}
+.en-texto small{display:block;color:var(--mut);font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.cuenta{font-size:12.5px;font-weight:800;color:var(--mut)}
+.fuente-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:8px;align-items:end}
+@media (max-width:820px){.grid2,.ch-grid{grid-template-columns:1fr}.preview{position:static}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mc" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="30" fill="#FF6B5B"/>
+    <path d="M14 44V22l9 12 9-12v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M51 26a10 10 0 1 0 0 14" fill="none" stroke="#2EC4B6" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="51" cy="14" r="5" fill="#FFC94A"/>
+  </symbol>
+</svg>
+
+<div class="w">
+  <header>
+    <div class="brand">
+      <svg role="img" aria-label="Logotipo de Mauricio Cantor"><use href="#mc"/></svg>
+      <div><b>Mauricio Cantor</b><small>Investiga, cita y escribe sin enredos</small></div>
+      <a class="yt" href="https://www.youtube.com/@mauriciocantormolina" target="_blank" rel="noopener">▶ Ver el canal</a>
+    </div>
+    <nav aria-label="Herramientas">
+      <a href="#inicio" data-v="inicio">Inicio</a>
+      <a href="#cita" data-v="cita">Cítalo</a>
+      <a href="#arma" data-v="arma">Ref Express</a>
+      <a href="#chequeo" data-v="chequeo">¿Hace match?</a>
+    </nav>
+  </header>
+
+  <!-- INICIO -->
+  <section id="v-inicio" data-view>
+    <div class="hero">
+      <span class="pill">Kit Sin Enredos · gratis · APA 7</span>
+      <h1 style="margin-top:10px">Tus citas y referencias, <em>sin enredos</em></h1>
+      <p>Tres herramientas rápidas que acompañan los videos del canal: <b>Cítalo</b> te da la cita para cada caso, <b>Ref Express</b> arma la referencia en cinco pasos y <b>¿Hace match?</b> revisa que cada cita tenga su referencia.</p>
+    </div>
+    <div class="tools">
+      <a class="tool" href="#cita">
+        <span class="ico" style="background:var(--tinta)">“ ”</span>
+        <h2>Cítalo</h2><span class="pill">Tu cita para cada caso</span>
+        <p>Paráfrasis, cita textual corta o larga, organización con sigla, cita secundaria, varias fuentes o comunicación personal: elige tu caso y copia la cita.</p>
+        <span class="go">Abrir herramienta →</span>
+      </a>
+      <a class="tool" href="#arma">
+        <span class="ico" style="background:var(--coral)">( )</span>
+        <h2>Ref Express</h2><span class="pill">Tu referencia en 5 pasos</span>
+        <p>Elige el tipo de fuente, responde cinco pasos y obtén la referencia, la cita parentética y la narrativa.</p>
+        <span class="go">Abrir herramienta →</span>
+      </a>
+      <a class="tool" href="#chequeo">
+        <span class="ico" style="background:var(--menta)">✓</span>
+        <h2>¿Hace match?</h2><span class="pill">Citas vs. referencias en 30 s</span>
+        <p>Pega tu texto y tu lista de referencias. Te muestra las citas sin referencia y las referencias que nunca citaste.</p>
+        <span class="go">Abrir herramienta →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ARMA -->
+  <section id="v-arma" data-view hidden>
+    <div class="grid2">
+      <div class="panel">
+        <ol class="steps" id="steps"></ol>
+        <div id="paso" class="paso"></div>
+        <div class="nav-pasos">
+          <button class="btn sec" id="prev" type="button">← Anterior</button>
+          <button class="btn pri" id="next" type="button">Siguiente →</button>
+        </div>
+      </div>
+      <aside class="panel preview" aria-live="polite">
+        <h3>Ref Express · tu referencia en APA 7</h3>
+        <p class="ejemplo" id="ejNota">Datos de ejemplo: cámbialos por los de tu fuente.</p>
+        <div class="refbox" id="ref"></div>
+        <ul class="leyenda">
+          <li><i style="background:var(--suave-coral)"></i>Quién</li>
+          <li><i style="background:var(--suave-sol)"></i>Cuándo</li>
+          <li><i style="background:var(--suave-menta)"></i>Qué</li>
+          <li><i style="border:2px solid var(--linea)"></i>Dónde</li>
+        </ul>
+        <div class="acciones">
+          <button class="btn pri" id="copiarRef" type="button">Copiar referencia</button>
+          <button class="btn min" id="limpiar" type="button">Empezar de cero</button>
+          <span class="estado" id="estRef"></span>
+        </div>
+        <div class="citas">
+          <div class="cita"><div><small>Cita parentética</small><span id="cPar"></span></div><button class="btn sec" type="button" data-copy="cPar">Copiar</button></div>
+          <div class="cita"><div><small>Cita narrativa</small><span id="cNar"></span></div><button class="btn sec" type="button" data-copy="cNar">Copiar</button></div>
+        </div>
+        <ul class="avisos" id="avisos"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CITA -->
+  <section id="v-cita" data-view hidden>
+    <div class="grid2">
+      <div class="panel">
+        <span class="pill">Cítalo</span><h2 style="font-size:26px;margin-top:8px">¿Qué quieres citar?</h2>
+        <p class="ayuda" style="color:var(--mut);margin:4px 0 14px">Elige tu caso y llena los datos. La cita se actualiza mientras escribes.</p>
+        <div class="sit" id="sit" role="radiogroup" aria-label="Tipo de cita"></div>
+        <div class="campos" id="citaCampos" style="margin-top:18px"></div>
+      </div>
+      <aside class="panel preview" aria-live="polite">
+        <h3>Tu cita en APA 7</h3>
+        <p class="ejemplo" id="cEj">Datos de ejemplo: cámbialos por los de tu fuente.</p>
+        <div class="citas" style="margin-top:0">
+          <div class="cita" id="boxPar"><div><small>Parentética</small><span id="kPar"></span></div><button class="btn sec" type="button" data-copyk="kPar">Copiar</button></div>
+          <div class="cita" id="boxNar"><div><small>Narrativa</small><span id="kNar"></span></div><button class="btn sec" type="button" data-copyk="kNar">Copiar</button></div>
+        </div>
+        <span class="estado" id="estCita"></span>
+        <div class="en-texto"><small>Así se ve en tu texto</small><div id="kEj"></div></div>
+        <ul class="avisos" id="kAv"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CHEQUEO -->
+  <section id="v-chequeo" data-view hidden>
+    <div class="panel" style="margin-bottom:24px">
+      <span class="pill">¿Hace match?</span><h2 style="font-size:28px;margin-top:8px">¿Cada cita tiene su referencia?</h2>
+      <p class="ayuda" style="color:var(--mut);margin:4px 0 14px">Cada cita del texto debe tener su referencia, y cada referencia debe aparecer citada al menos una vez. Se compara el primer autor y el año.</p>
+      <p class="ejemplo">Texto y referencias de ejemplo: reemplázalos por los tuyos.</p>
+      <div class="ch-grid">
+        <div class="f"><label for="txt">Tu texto con citas</label><textarea id="txt" placeholder="Ej.: La citación evita el plagio (Cantor Molina, 2024). Según Ruiz Ospina (2022), …"></textarea></div>
+        <div class="f"><label for="refs">Tu lista de referencias (una por línea)</label><textarea id="refs" placeholder="Ej.: Cantor Molina, N. M. (2024). Título del trabajo. Editorial."></textarea></div>
+      </div>
+      <div class="acciones">
+        <button class="btn pri" id="revisar" type="button">Revisar</button>
+        <button class="btn min" id="vaciar" type="button">Vaciar los dos campos</button>
+      </div>
+      <div class="resultado" id="resultado"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span><b>Mauricio Cantor</b> · Investiga, cita y escribe sin enredos</span>
+    <span>Contacto: <span class="correo">nelsoncantor10@hotmail.com</span></span>
+  </footer>
+</div>
+
+<script>
+/* ---------- Rutas ---------- */
+const VISTAS=['inicio','cita','arma','chequeo'];
+function mostrar(){
+  const v=VISTAS.includes(location.hash.slice(1))?location.hash.slice(1):'inicio';
+  document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.id!=='v-'+v);
+  document.querySelectorAll('nav a').forEach(a=>{ if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+}
+addEventListener('hashchange',mostrar);
+
+/* ---------- Utilidades ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const limpio=s=>String(s??'').trim().replace(/\s+/g,' ');
+const cierra=s=>/[.?!]$/.test(s.replace(/<[^>]+>/g,''))?s:s+'.';
+const sinTags=s=>s.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"');
+const norm=s=>String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9ñ ]/g,' ').replace(/\s+/g,' ').trim();
+
+async function copiar(html,plain,est){
+  try{
+    if(window.ClipboardItem&&navigator.clipboard.write){
+      await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([plain],{type:'text/plain'})})]);
+    }else{ await navigator.clipboard.writeText(plain); }
+    est.textContent='Copiado';
+  }catch(_){
+    try{ await navigator.clipboard.writeText(plain); est.textContent='Copiado sin cursivas'; }
+    catch(__){ est.textContent='No se pudo copiar: selecciona el texto y usa Ctrl+C'; }
+  }
+  setTimeout(()=>est.textContent='',2500);
+}
+
+/* ---------- Reglas APA 7 ---------- */
+function iniciales(nombres){
+  return limpio(nombres).split(' ').filter(w=>w && w[0]===w[0].toUpperCase() && /\p{L}/u.test(w[0]))
+    .map(w=>w.split('-').map(p=>p[0].toUpperCase()+'.').join('-')).join(' ');
+}
+function autorRef(a){
+  if(a.tipo==='org') return limpio(a.apellidos);
+  const ap=limpio(a.apellidos), ini=iniciales(a.nombres);
+  return ini?`${ap}, ${ini}`:ap;
+}
+function unir(lista){
+  const n=lista.length;
+  if(n===0) return '';
+  if(n===1) return lista[0];
+  if(n===2) return `${lista[0]} y ${lista[1]}`;
+  if(n<=20) return lista.slice(0,-1).join(', ')+' y '+lista[n-1];
+  return lista.slice(0,19).join(', ')+', . . . '+lista[n-1];
+}
+function editoresTxt(eds){
+  return unir(eds.map(e=>{const i=iniciales(e.nombres);return (i?i+' ':'')+limpio(e.apellidos);}));
+}
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function fechaTxt(s){
+  if(s.sf||!limpio(s.anio)) return 's. f.';
+  let f=limpio(s.anio);
+  if(s.tipo==='web'&&s.mes){ f+=', '+(limpio(s.dia)?limpio(s.dia)+' de ':'')+s.mes; }
+  return f;
+}
+function enlace(s){
+  let d=limpio(s.doi).replace(/^(https?:\/\/)?(dx\.)?doi\.org\//i,'').replace(/^doi:\s*/i,'');
+  if(d) return 'https://doi.org/'+d;
+  return limpio(s.url);
+}
+const pags=p=>limpio(p).replace(/\s*[-–—]\s*/g,'–');
+const TIPOS={
+  articulo:{n:'Artículo de revista',d:'Publicado en una revista científica'},
+  libro:{n:'Libro',d:'Libro completo, impreso o digital'},
+  capitulo:{n:'Capítulo de libro',d:'Capítulo en un libro con editores'},
+  web:{n:'Página web',d:'Contenido de un sitio web'},
+  tesis:{n:'Tesis o trabajo de grado',d:'Pregrado, maestría o doctorado'}
+};
+function construir(s){
+  const autores=s.autores.filter(a=>limpio(a.apellidos));
+  const avisos=[];
+  const seg=[];
+  const titulo=esc(limpio(s.titulo))||'Título de la obra';
+  const tituloIt=['libro','web','tesis'].includes(s.tipo);
+  const tHTML=tituloIt?`<i>${titulo}</i>`:titulo;
+  const fecha=fechaTxt(s);
+  if(autores.length){
+    seg.push(['a',esc(cierra(unir(autores.map(autorRef))))]);
+    seg.push(['d',`(${fecha}).`]);
+    seg.push(['t',cierra(tHTML)]);
+  }else{
+    seg.push(['t',cierra(tHTML)]);
+    seg.push(['d',`(${fecha}).`]);
+    avisos.push('Sin autor: el título pasa al lugar del autor.');
+  }
+  const L=enlace(s);
+  if(s.tipo==='articulo'){
+    let f=`<i>${esc(limpio(s.revista))||'Nombre de la revista'}`;
+    if(limpio(s.volumen)) f+=`, ${esc(limpio(s.volumen))}</i>`+(limpio(s.numero)?`(${esc(limpio(s.numero))})`:''); else f+='</i>';
+    if(limpio(s.paginas)) f+=`, ${esc(pags(s.paginas))}`;
+    seg.push(['f',f+'.']);
+    if(!limpio(s.doi)) avisos.push('Si el artículo tiene DOI, agrégalo: es el enlace preferido en APA 7.');
+  }
+  if(s.tipo==='libro'){
+    if(limpio(s.edicion)&&+s.edicion>1) seg[seg.findIndex(x=>x[0]==='t')][1]=`${tHTML} (${+s.edicion}.ª ed.).`;
+    seg.push(['f',esc(cierra(limpio(s.editorial)||'Editorial'))]);
+  }
+  if(s.tipo==='capitulo'){
+    const eds=s.editores.filter(e=>limpio(e.apellidos));
+    let f='En '+(eds.length?esc(editoresTxt(eds))+` (${eds.length>1?'Eds.':'Ed.'}), `:'');
+    f+=`<i>${esc(limpio(s.libro))||'Título del libro'}</i>`;
+    if(limpio(s.paginas)) f+=` (pp. ${esc(pags(s.paginas))})`;
+    seg.push(['f',f+'.']);
+    seg.push(['f',esc(cierra(limpio(s.editorial)||'Editorial'))]);
+  }
+  if(s.tipo==='web'){
+    const sitio=limpio(s.sitio);
+    const autorUnico=autores.length===1?limpio(autores[0].apellidos):'';
+    if(sitio && norm(sitio)!==norm(autorUnico)) seg.push(['f',esc(cierra(sitio))]);
+    else if(sitio) avisos.push('El sitio tiene el mismo nombre que el autor, así que se omite.');
+    if(!L) avisos.push('Agrega la URL de la página.');
+  }
+  if(s.tipo==='tesis'){
+    const t=seg.findIndex(x=>x[0]==='t');
+    seg[t][1]=`${tHTML} [${esc(s.nivel)}, ${esc(limpio(s.institucion)||'Institución')}].`;
+    if(limpio(s.repositorio)) seg.push(['f',esc(cierra(limpio(s.repositorio)))]);
+  }
+  if(L) seg.push(['l',esc(L)]);
+  if(fecha==='s. f.') avisos.push('Sin fecha: se escribe "s. f." en la referencia y en la cita.');
+
+  // Citas
+  let quien;
+  if(!autores.length){
+    const tt=limpio(s.titulo)||'Título';
+    quien=tituloIt?`<i>${esc(tt)}</i>`:`“${esc(tt)}”`;
+  }else{
+    const ap=a=>limpio(a.apellidos);
+    if(autores.length===1) quien=esc(ap(autores[0]));
+    else if(autores.length===2) quien=`${esc(ap(autores[0]))} y ${esc(ap(autores[1]))}`;
+    else quien=`${esc(ap(autores[0]))} et al.`;
+  }
+  const anioCita=s.sf||!limpio(s.anio)?'s. f.':limpio(s.anio);
+  const par=`(${quien}, ${anioCita})`;
+  const nar=`${quien} (${anioCita})`;
+  if(autores.length>=3) avisos.push('Con tres o más autores, la cita usa "et al." desde la primera vez.');
+  const html=seg.map(([k,h])=>`<span class="${k}">${h}</span>`).join(' ');
+  const plano=seg.map(x=>x[1]).join(' ');
+  return {html,plano,par,nar,avisos};
+}
+
+/* ---------- Estado del asistente ---------- */
+const EJEMPLO=()=>({
+  tipo:'articulo',
+  autores:[{tipo:'persona',apellidos:'Cantor Molina',nombres:'Nelson Mauricio'},{tipo:'persona',apellidos:'Ruiz Ospina',nombres:'Laura'}],
+  anio:'2024',sf:false,dia:'',mes:'',
+  titulo:'Uso de gestores de referencias en estudiantes de pregrado',
+  revista:'Revista Ejemplo de Investigación',volumen:'12',numero:'3',paginas:'45-60',doi:'10.1234/rei.2024.015',url:'',
+  editorial:'',edicion:'',libro:'',editores:[{apellidos:'',nombres:''}],
+  sitio:'',nivel:'Trabajo de grado de pregrado',institucion:'',repositorio:''
+});
+const VACIO=()=>({tipo:'articulo',autores:[{tipo:'persona',apellidos:'',nombres:''}],anio:'',sf:false,dia:'',mes:'',titulo:'',revista:'',volumen:'',numero:'',paginas:'',doi:'',url:'',editorial:'',edicion:'',libro:'',editores:[{apellidos:'',nombres:''}],sitio:'',nivel:'Trabajo de grado de pregrado',institucion:'',repositorio:''});
+let S=EJEMPLO(), esEjemplo=true, paso=0;
+const PASOS=['Tipo','Autores','Fecha','Título','Publicación'];
+
+function campo(id,label,val,ayuda='',tipo='text',ph=''){
+  return `<div class="f"><label for="${id}">${label}</label><input type="${tipo}" id="${id}" data-k="${id.replace('f_','')}" value="${esc(val)}" placeholder="${esc(ph)}">${ayuda?`<small>${ayuda}</small>`:''}</div>`;
+}
+function pintarPaso(){
+  $('steps').innerHTML=PASOS.map((p,i)=>`<li><button type="button" data-p="${i}" ${i===paso?'aria-current="step"':''} class="${i<paso?'done':''}"><span>${i+1}</span>${p}</button></li>`).join('');
+  let h='';
+  if(paso===0){
+    h=`<h2>¿Qué tipo de fuente vas a citar?</h2><p class="ayuda">El tipo define qué datos pide la referencia.</p><div class="tipos" role="radiogroup">`+
+      Object.entries(TIPOS).map(([k,t])=>`<label><input type="radio" name="tipo" value="${k}" ${S.tipo===k?'checked':''}><span>${t.n}<small>${t.d}</small></span></label>`).join('')+`</div>`;
+  }
+  if(paso===1){
+    h=`<h2>¿Quién la escribió?</h2><p class="ayuda">Escribe los apellidos completos y los nombres; las iniciales se arman solas. Si es una entidad, cambia a "Organización".</p><div class="campos">`+
+      S.autores.map((a,i)=>`<div class="autor"><div class="top"><b>Autor ${i+1}</b>
+        <span class="seg"><button type="button" data-tipoautor="${i}:persona" aria-pressed="${a.tipo!=='org'}">Persona</button><button type="button" data-tipoautor="${i}:org" aria-pressed="${a.tipo==='org'}">Organización</button></span>
+        ${S.autores.length>1?`<button class="btn min" type="button" data-quitar="${i}">Quitar</button>`:''}</div>
+        <div class="fila">
+          <div class="f"><label for="ap${i}">${a.tipo==='org'?'Nombre de la organización':'Apellidos'}</label><input type="text" id="ap${i}" data-autor="${i}:apellidos" value="${esc(a.apellidos)}" placeholder="${a.tipo==='org'?'Ej.: Ministerio de Educación Nacional':'Ej.: Cantor Molina'}"></div>
+          ${a.tipo==='org'?'':`<div class="f"><label for="no${i}">Nombres</label><input type="text" id="no${i}" data-autor="${i}:nombres" value="${esc(a.nombres)}" placeholder="Ej.: Nelson Mauricio"><small>${iniciales(a.nombres)?'Quedará: '+esc(iniciales(a.nombres)):''}</small></div>`}
+        </div></div>`).join('')+
+      `<button class="btn sec" type="button" id="addAutor">+ Agregar autor</button></div>`;
+  }
+  if(paso===2){
+    h=`<h2>¿Cuándo se publicó?</h2><p class="ayuda">Solo el año, salvo en páginas web, donde puedes agregar día y mes.</p><div class="campos">
+      <label class="chk"><input type="checkbox" id="sf" ${S.sf?'checked':''}> No tiene fecha (s. f.)</label>
+      ${S.sf?'':`<div class="fila">${campo('f_anio','Año',S.anio,'','text','Ej.: 2024')}
+      ${S.tipo==='web'?campo('f_dia','Día (opcional)',S.dia,'','text','Ej.: 15')+`<div class="f"><label for="f_mes">Mes (opcional)</label><select id="f_mes" data-k="mes"><option value="">—</option>${MESES.map(m=>`<option ${S.mes===m?'selected':''}>${m}</option>`).join('')}</select></div>`:''}</div>`}
+    </div>`;
+  }
+  if(paso===3){
+    const it=['libro','web','tesis'].includes(S.tipo);
+    h=`<h2>¿Cuál es el título?</h2><p class="ayuda">Escríbelo en tipo oración: mayúscula inicial y en nombres propios. ${it?'Este título va en cursiva.':'Este título va sin cursiva.'}</p><div class="campos">
+      ${campo('f_titulo',S.tipo==='capitulo'?'Título del capítulo':S.tipo==='articulo'?'Título del artículo':'Título',S.titulo,'Si tiene subtítulo, sepáralo con dos puntos y empieza el subtítulo con mayúscula.','text',S.tipo==='articulo'?'Ej.: Uso de gestores de referencias en estudiantes de pregrado':S.tipo==='libro'?'Ej.: Escritura académica paso a paso':S.tipo==='capitulo'?'Ej.: Cómo citar en el trabajo de grado':S.tipo==='web'?'Ej.: Cinco errores comunes al citar en APA 7':'Ej.: Alfabetización informacional en estudiantes de ingeniería')}</div>`;
+  }
+  if(paso===4){
+    let c='';
+    if(S.tipo==='articulo') c=campo('f_revista','Nombre de la revista',S.revista,'Va en cursiva, con mayúscula en cada palabra principal.','text','Ej.: Revista Ejemplo de Investigación')+
+      `<div class="fila">${campo('f_volumen','Volumen',S.volumen,'','text','Ej.: 12')}${campo('f_numero','Número',S.numero,'','text','Ej.: 3')}${campo('f_paginas','Páginas',S.paginas,'','text','Ej.: 45-60')}</div>`+
+      campo('f_doi','DOI',S.doi,'Pega el DOI como venga; se convierte en enlace https://doi.org/','text','Ej.: 10.1234/rei.2024.015')+campo('f_url','URL (solo si no hay DOI)',S.url,'','url','Ej.: https://www.ejemplo.org/articulo');
+    if(S.tipo==='libro') c=`<div class="fila">${campo('f_editorial','Editorial',S.editorial,'Sin "S.A." ni "Editorial".','text','Ej.: Ediciones Ejemplo')}${campo('f_edicion','Edición (número)',S.edicion,'Déjalo vacío si es la primera.','text','Ej.: 2')}</div>`+
+      campo('f_doi','DOI',S.doi,'','text','Ej.: 10.1234/abcd.2024')+campo('f_url','URL (solo si no hay DOI)',S.url,'','url','Ej.: https://www.ejemplo.org/articulo');
+    if(S.tipo==='capitulo') c=campo('f_libro','Título del libro',S.libro,'','text','Ej.: Investigar en la universidad')+
+      S.editores.map((e,i)=>`<div class="fila"><div class="f"><label for="ea${i}">Apellidos del editor ${i+1}</label><input type="text" id="ea${i}" data-editor="${i}:apellidos" value="${esc(e.apellidos)}" placeholder="Ej.: Cantor Molina"></div><div class="f"><label for="en${i}">Nombres del editor ${i+1}</label><input type="text" id="en${i}" data-editor="${i}:nombres" value="${esc(e.nombres)}" placeholder="Ej.: Nelson Mauricio"></div></div>`).join('')+
+      `<div><button class="btn sec" type="button" id="addEditor">+ Agregar editor</button></div>`+
+      `<div class="fila">${campo('f_paginas','Páginas del capítulo',S.paginas,'','text','Ej.: 23-41')}${campo('f_editorial','Editorial',S.editorial,'','text','Ej.: Ediciones Ejemplo')}</div>`+campo('f_doi','DOI',S.doi,'','text','Ej.: 10.1234/abcd.2024')+campo('f_url','URL (solo si no hay DOI)',S.url,'','url','Ej.: https://www.ejemplo.org/articulo');
+    if(S.tipo==='web') c=campo('f_sitio','Nombre del sitio web',S.sitio,'Se omite si es igual al autor.','text','Ej.: Portal Ejemplo de Investigación')+campo('f_url','URL',S.url,'','url','Ej.: https://www.ejemplo.org/guia-apa');
+    if(S.tipo==='tesis') c=`<div class="f"><label for="f_nivel">Nivel</label><select id="f_nivel" data-k="nivel">${['Trabajo de grado de pregrado','Tesis de maestría','Tesis doctoral'].map(n=>`<option ${S.nivel===n?'selected':''}>${n}</option>`).join('')}</select></div>`+
+      campo('f_institucion','Institución que otorga el título',S.institucion,'','text','Ej.: Universidad Ejemplo')+campo('f_repositorio','Repositorio (si está publicada)',S.repositorio,'','text','Ej.: Repositorio Institucional Ejemplo')+campo('f_url','URL',S.url,'','url','Ej.: https://repositorio.ejemplo.edu.co/handle/123');
+    h=`<h2>¿Dónde se publicó?</h2><p class="ayuda">Datos de ${TIPOS[S.tipo].n.toLowerCase()}.</p><div class="campos">${c}</div>`;
+  }
+  $('paso').innerHTML=h;
+  $('prev').disabled=paso===0; $('prev').style.visibility=paso===0?'hidden':'visible';
+  $('next').textContent=paso===PASOS.length-1?'Copiar referencia':'Siguiente →';
+  pintarRef();
+}
+function pintarRef(){
+  const r=construir(S);
+  $('ref').innerHTML=r.html; $('cPar').innerHTML=r.par; $('cNar').innerHTML=r.nar;
+  $('avisos').innerHTML=r.avisos.map(a=>`<li>${a}</li>`).join('');
+  $('ejNota').hidden=!esEjemplo;
+}
+function tocado(){ esEjemplo=false; pintarRef(); }
+
+const panel=$('paso');
+panel.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.k){ S[t.dataset.k]=t.value; }
+  if(t.dataset.autor){ const [i,k]=t.dataset.autor.split(':'); S.autores[i][k]=t.value;
+    if(k==='nombres'){ const sm=t.parentElement.querySelector('small'); if(sm) sm.textContent=iniciales(t.value)?'Quedará: '+iniciales(t.value):''; } }
+  if(t.dataset.editor){ const [i,k]=t.dataset.editor.split(':'); S.editores[i][k]=t.value; }
+  tocado();
+});
+panel.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.name==='tipo'){ S.tipo=t.value; tocado(); }
+  if(t.id==='sf'){ S.sf=t.checked; tocado(); pintarPaso(); }
+});
+panel.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.id==='addAutor'){ S.autores.push({tipo:'persona',apellidos:'',nombres:''}); pintarPaso(); }
+  if(b.id==='addEditor'){ S.editores.push({apellidos:'',nombres:''}); pintarPaso(); }
+  if(b.dataset.quitar){ S.autores.splice(+b.dataset.quitar,1); tocado(); pintarPaso(); }
+  if(b.dataset.tipoautor){ const [i,k]=b.dataset.tipoautor.split(':'); S.autores[i].tipo=k; if(k==='org') S.autores[i].nombres=''; tocado(); pintarPaso(); }
+});
+$('steps').addEventListener('click',e=>{const b=e.target.closest('button'); if(b){paso=+b.dataset.p; pintarPaso();}});
+$('prev').onclick=()=>{ if(paso>0){paso--; pintarPaso();} };
+$('next').onclick=()=>{ if(paso<PASOS.length-1){paso++; pintarPaso(); $('paso').querySelector('input,select')?.focus();} else $('copiarRef').click(); };
+$('copiarRef').onclick=()=>{ const r=construir(S); copiar(r.html.replace(/<span[^>]*>|<\/span>/g,''),sinTags(r.plano),$('estRef')); };
+$('limpiar').onclick=()=>{ S=VACIO(); esEjemplo=false; paso=0; pintarPaso(); };
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>{ const el=$(b.dataset.copy); copiar(el.innerHTML,el.textContent,$('estRef')); });
+
+/* ---------- Chequeo ---------- */
+const TXT_EJ=`El uso de gestores de referencias mejora la organización de las fuentes (Cantor Molina y Ruiz Ospina, 2024). Según Herrera et al. (2021), los estudiantes que usan Zotero cometen menos errores de formato. Otros estudios señalan que la formación en citación debe empezar en primer semestre (Gómez, 2019; Cantor Molina, s. f.).`;
+const REFS_EJ=`Cantor Molina, N. M. (s. f.). Guía rápida de citación. Repositorio Ejemplo.
+Cantor Molina, N. M. y Ruiz Ospina, L. (2024). Uso de gestores de referencias en estudiantes de pregrado. Revista Ejemplo de Investigación, 12(3), 45–60. https://doi.org/10.1234/rei.2024.015
+Herrera, P., Ospina, D. y Valencia, J. (2021). Errores de formato en trabajos de grado. Editorial Ejemplo.
+Valencia, J. (2018). Lectura y escritura académica. Editorial Ejemplo.`;
+$('txt').value=TXT_EJ; $('refs').value=REFS_EJ;
+
+const AN='(?:\\d{4}[a-z]?|s\\.\\s?f\\.)';
+function claveAnio(y){ return y.replace(/\s/g,'').toLowerCase(); }
+function primerAutor(txt){
+  let t=txt.replace(/\bet al\.?/i,'').trim();
+  t=t.split(/\s+(?:y|&)\s+|,\s*/)[0];
+  return norm(t);
+}
+function extraerCitas(texto){
+  const out=[];
+  // parentéticas
+  const rePar=/\(([^()]*?(?:\d{4}[a-z]?|s\.\s?f\.)[^()]*)\)/g; let m;
+  while((m=rePar.exec(texto))){
+    let off=m.index+1;
+    m[1].split(';').forEach(part=>{
+      const mm=part.match(new RegExp('^\\s*(?:v[ée]ase\\s+(?:tambi[ée]n\\s+)?|e\\.\\s?g\\.,?\\s+)?(.+?),\\s*('+AN+')','i'));
+      if(mm && /\p{Lu}/u.test(mm[1])) out.push({autor:mm[1].trim(),anio:mm[2],ini:off+part.indexOf(mm[1]),fin:off+part.indexOf(mm[2])+mm[2].length,tipo:'parentética'});
+      off+=part.length+1;
+    });
+  }
+  // narrativas
+  const apellido="\\p{Lu}[\\p{L}'’-]+(?:\\s+(?:de\\s+(?:la\\s+|los\\s+)?|del\\s+)?\\p{Lu}[\\p{L}'’-]+)*";
+  const reNar=new RegExp('('+apellido+'(?:\\s+(?:y|&)\\s+'+apellido+')?(?:\\s+et\\s+al\\.)?)\\s+\\(('+AN+')\\)','gu');
+  while((m=reNar.exec(texto))){
+    let autor=m[1].replace(/^(Según|Como|Para|En|Para|Por|Con|Tal|Así)\s+/,'');
+    const delta=m[1].length-autor.length;
+    out.push({autor,anio:m[2],ini:m.index+delta,fin:m.index+m[0].length,tipo:'narrativa'});
+  }
+  return out.map(c=>({...c,clave:primerAutor(c.autor)+'|'+claveAnio(c.anio)}));
+}
+function extraerRefs(texto){
+  return texto.split(/\n+/).map(l=>l.trim()).filter(Boolean).map(l=>{
+    const y=l.match(new RegExp('\\(('+AN+')(?:,[^)]*)?\\)'));
+    const autorSeg=y?l.slice(0,y.index):l;
+    const prim=(autorSeg.split(',')[0]||'').replace(/\.$/,'');
+    return {linea:l,anio:y?y[1]:'',primer:prim.trim(),clave:norm(prim)+'|'+(y?claveAnio(y[1]):''),sinAnio:!y};
+  });
+}
+function revisar(){
+  const texto=$('txt').value, refs=extraerRefs($('refs').value), citas=extraerCitas(texto);
+  const clavesRef=new Set(refs.map(r=>r.clave)), clavesCita=new Set(citas.map(c=>c.clave));
+  const sinRef=citas.filter(c=>!clavesRef.has(c.clave));
+  const sinCita=refs.filter(r=>!clavesCita.has(r.clave));
+  const ok=citas.filter(c=>clavesRef.has(c.clave));
+  const avisos=[];
+  refs.filter(r=>r.sinAnio).forEach(r=>avisos.push(`No encontré el año entre paréntesis en: “${esc(r.linea.slice(0,70))}…”`));
+  for(let i=1;i<refs.length;i++){ if(norm(refs[i].linea)<norm(refs[i-1].linea)){ avisos.push(`Orden alfabético: “${esc(refs[i].primer)}” debería ir antes de “${esc(refs[i-1].primer)}”.`); } }
+  if(!citas.length) avisos.push('No encontré citas en el texto. Revisa que tengan el formato (Apellido, año) o Apellido (año).');
+  // marcado del texto
+  let marc='',pos=0; [...citas].sort((a,b)=>a.ini-b.ini).forEach(c=>{ if(c.ini<pos) return; marc+=esc(texto.slice(pos,c.ini))+`<mark class="${clavesRef.has(c.clave)?'ok':'mal'}">${esc(texto.slice(c.ini,c.fin))}</mark>`; pos=c.fin; });
+  marc+=esc(texto.slice(pos));
+  const unicasOk=[...new Set(ok.map(c=>c.clave))].length;
+  $('resultado').innerHTML=`
+    <div class="resumen">
+      <div class="res ok"><b>${unicasOk}</b><span>fuentes bien enlazadas</span></div>
+      <div class="res ${sinRef.length?'mal':'ok'}"><b>${sinRef.length}</b><span>citas sin referencia</span></div>
+      <div class="res ${sinCita.length?'mal':'ok'}"><b>${sinCita.length}</b><span>referencias sin citar</span></div>
+    </div>
+    ${sinRef.length?`<h3>Citas sin referencia</h3><ul class="lista">${sinRef.map(c=>`<li><b>${esc(c.autor)}, ${esc(c.anio)}</b> · cita ${c.tipo}. Agrega su referencia o corrige el apellido o el año.</li>`).join('')}</ul>`:''}
+    ${sinCita.length?`<h3>Referencias que nunca citas</h3><ul class="lista">${sinCita.map(r=>`<li>${esc(r.linea)}</li>`).join('')}</ul>`:''}
+    ${avisos.length?`<h3>Revisa también</h3><ul class="lista aviso">${avisos.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
+    ${!sinRef.length&&!sinCita.length&&citas.length?`<h3>Todo coincide</h3><ul class="lista ok"><li>Cada cita tiene su referencia y cada referencia está citada.</li></ul>`:''}
+    <h3>Tu texto revisado</h3><div class="marcado">${marc}</div>`;
+}
+$('revisar').onclick=revisar;
+$('vaciar').onclick=()=>{ $('txt').value=''; $('refs').value=''; $('resultado').innerHTML=''; $('txt').focus(); };
+
+/* ---------- Construye tu cita ---------- */
+const SIT={
+  parafrasis:['Paráfrasis','Explicas una idea con tus palabras'],
+  corta:['Cita textual corta','Copias menos de 40 palabras'],
+  larga:['Cita textual larga','Copias 40 palabras o más'],
+  secundaria:['Cita secundaria','Citas a un autor que leíste en otra obra'],
+  varias:['Varias fuentes','Dos o más obras respaldan la misma idea'],
+  personal:['Comunicación personal','Entrevista, correo o conversación']
+};
+const CITA_EJ=()=>({sit:'corta',cuantos:'1',a1:'Cantor Molina',a2:'Ruiz Ospina',org:'Ministerio de Educación Nacional',sigla:'MEN',primera:true,anio:'2024',sf:false,letra:'',loc:'p.',pag:'15',
+  texto:'citar bien es reconocer el trabajo de quienes investigaron antes que nosotros',
+  o_autor:'Pérez',o_anio:'1998',
+  varias:[{autor:'Herrera et al.',anio:'2021'},{autor:'Cantor Molina',anio:'2024'},{autor:'Cantor Molina',anio:'2020'}],
+  cp_nom:'Nelson Mauricio',cp_ap:'Cantor Molina',cp_fecha:'15 de marzo de 2024'});
+let K=CITA_EJ(), kEjemplo=true;
+const palabras=t=>limpio(t)?limpio(t).split(' ').length:0;
+function kAnio(){ const l=limpio(K.letra).toLowerCase(); if(K.sf||!limpio(K.anio)) return 's. f.'+(l?'-'+l:''); return limpio(K.anio)+l; }
+function kLoc(){ const p=limpio(K.pag); if(!p) return ''; const loc=K.loc==='p.'&&/[-–]/.test(p)?'pp.':K.loc; return `${loc} ${esc(pags(p))}`; }
+function kQuien(){
+  // devuelve {par, nar, anioNar} considerando organización con sigla
+  const a1=esc(limpio(K.a1)||'Apellido'), a2=esc(limpio(K.a2)||'Apellido');
+  const Y=kAnio();
+  if(K.cuantos==='1') return {par:a1,nar:a1,yN:Y};
+  if(K.cuantos==='2') return {par:`${a1} y ${a2}`,nar:`${a1} y ${a2}`,yN:Y};
+  if(K.cuantos==='3') return {par:`${a1} et al.`,nar:`${a1} et al.`,yN:Y};
+  const org=esc(limpio(K.org)||'Nombre de la organización'), sg=esc(limpio(K.sigla));
+  if(sg&&K.primera) return {par:`${org} [${sg}]`,nar:org,yN:`${sg}, ${Y}`};
+  if(sg) return {par:sg,nar:sg,yN:Y};
+  return {par:org,nar:org,yN:Y};
+}
+function construirCita(){
+  const Y=kAnio(), L=kLoc(), q=kQuien(), av=[];
+  const txt=esc(limpio(K.texto)||'texto copiado tal cual');
+  let par='',nar='',ej='';
+  if(K.sit==='parafrasis'){
+    par=`(${q.par}, ${Y}${L?', '+L:''})`; nar=`${q.nar} (${q.yN})`;
+    ej=`La formación en citación debe empezar desde primer semestre ${par}.`;
+    av.push('En la paráfrasis la página es opcional, pero ayuda al lector a ubicar la idea.');
+  }
+  if(K.sit==='corta'){
+    if(!L) av.push('La cita textual siempre lleva la página o el párrafo.');
+    par=`“${txt}” (${q.par}, ${Y}${L?', '+L:''})`; nar=`${q.nar} (${q.yN}) afirma que “${txt}”${L?` (${L})`:''}`;
+    ej=`Como recuerda el autor, ${par}.`;
+    if(palabras(K.texto)>=40) av.push(`Tu texto tiene ${palabras(K.texto)} palabras: con 40 o más es una cita textual larga.`);
+  }
+  if(K.sit==='larga'){
+    if(!L) av.push('La cita textual siempre lleva la página o el párrafo.');
+    par=`(${q.par}, ${Y}${L?', '+L:''})`; nar=`${q.nar} (${q.yN}) señala:`;
+    ej=`<div class="bloque">${cierra(txt)} ${par}</div>`;
+    av.push('El bloque va sin comillas, con sangría de 1,27 cm, y la cita va después del punto final.');
+    if(palabras(K.texto)<40) av.push(`Tu texto tiene ${palabras(K.texto)} palabras: con menos de 40 es una cita textual corta.`);
+  }
+  if(K.sit==='secundaria'){
+    const oa=esc(limpio(K.o_autor)||'Autor original'), oy=esc(limpio(K.o_anio));
+    par=`(${oa}${oy?', '+oy:''}, como se citó en ${q.par}, ${Y})`; nar=`${oa} (${oy?oy+', ':''}como se citó en ${q.par}, ${Y})`;
+    ej=`La lectura crítica empieza por la pregunta ${par}.`;
+    av.push(`En la lista de referencias solo va la obra que leíste (${q.par.replace(/<[^>]+>/g,'')}, ${Y}), no la original.`);
+    av.push('Úsala solo cuando no puedas conseguir la obra original.');
+  }
+  if(K.sit==='varias'){
+    const grupos={};
+    K.varias.filter(v=>limpio(v.autor)).forEach(v=>{ const k=limpio(v.autor); (grupos[k]=grupos[k]||[]).push(limpio(v.anio)||'s. f.'); });
+    const orden=Object.keys(grupos).sort((a,b)=>norm(a).localeCompare(norm(b),'es'));
+    const ord=y=>y.startsWith('s. f.')?-1:+y.replace(/\D/g,'')||0; // s. f. primero, luego años en orden
+    orden.forEach(k=>grupos[k].sort((a,b)=>ord(a)-ord(b)));
+    par='('+orden.map(k=>`${esc(k)}, ${grupos[k].map(esc).join(', ')}`).join('; ')+')';
+    const ns=orden.map(k=>`${esc(k)} (${grupos[k].map(esc).join(', ')})`);
+    nar=ns.length<2?ns.join(''):ns.slice(0,-1).join(', ')+' y '+ns[ns.length-1];
+    ej=`Varios estudios coinciden en que los gestores de referencias reducen los errores ${par}.`;
+    av.push('Dentro del paréntesis, las obras van en orden alfabético y separadas por punto y coma.');
+    if(orden.some(k=>grupos[k].length>1)) av.push('Las obras de un mismo autor se agrupan y sus años van del más antiguo al más reciente.');
+  }
+  if(K.sit==='personal'){
+    const ini=iniciales(K.cp_nom), ap=esc(limpio(K.cp_ap)||'Apellido'), f=esc(limpio(K.cp_fecha)||'día de mes de año');
+    par=`(${ini?ini+' ':''}${ap}, comunicación personal, ${f})`; nar=`${ini?ini+' ':''}${ap} (comunicación personal, ${f})`;
+    ej=`El servicio de referencia atiende cerca de cien consultas al mes ${par}.`;
+    av.push('La comunicación personal no va en la lista de referencias, porque el lector no puede consultarla.');
+  }
+  if(K.sit!=='varias'&&K.sit!=='personal'){
+    if(K.cuantos==='3') av.push('Con tres o más autores se usa "et al." desde la primera cita.');
+    if(K.cuantos==='org'&&limpio(K.sigla)) av.push(K.primera?'La primera vez escribe el nombre completo con la sigla; después, solo la sigla.':'Desde la segunda cita basta con la sigla.');
+    if(K.sf||!limpio(K.anio)) av.push('Sin fecha: se escribe "s. f.".');
+    if(limpio(K.letra)) av.push('La letra (a, b…) distingue obras del mismo autor y año; usa la misma letra en la referencia.');
+  }
+  return {par,nar,ej,av};
+}
+function sel(id,k,opts){ return `<select id="${id}" data-c="${k}">${opts.map(([v,t])=>`<option value="${v}" ${K[k]===v?'selected':''}>${t}</option>`).join('')}</select>`; }
+function inp(id,k,label,ph,ayuda=''){ return `<div class="f"><label for="${id}">${label}</label><input type="text" id="${id}" data-c="${k}" value="${esc(K[k])}" placeholder="${esc(ph)}">${ayuda?`<small>${ayuda}</small>`:''}</div>`; }
+function pintarCitaForm(){
+  $('sit').innerHTML=Object.entries(SIT).map(([k,[n,d]])=>`<label class="tipos-l"><input type="radio" name="sit" value="${k}" ${K.sit===k?'checked':''}><span>${n}<small>${d}</small></span></label>`).join('');
+  let h='';
+  const autores=()=>{
+    let a=`<div class="f"><label for="k_cuantos">¿Quién es el autor?</label>${sel('k_cuantos','cuantos',[['1','Un autor'],['2','Dos autores'],['3','Tres o más autores'],['org','Una organización']])}</div>`;
+    if(K.cuantos==='org'){
+      a+=`<div class="fila">${inp('k_org','org','Nombre de la organización','Ej.: Ministerio de Educación Nacional')}${inp('k_sigla','sigla','Sigla (opcional)','Ej.: MEN')}</div>`;
+      if(limpio(K.sigla)) a+=`<label class="chk"><input type="checkbox" id="k_primera" ${K.primera?'checked':''}> Es la primera vez que la cito</label>`;
+    }else{
+      a+=`<div class="fila">${inp('k_a1','a1',K.cuantos==='1'?'Apellidos del autor':'Apellidos del primer autor','Ej.: Cantor Molina')}${K.cuantos==='2'?inp('k_a2','a2','Apellidos del segundo autor','Ej.: Ruiz Ospina'):''}</div>`;
+    }
+    a+=`<label class="chk"><input type="checkbox" id="k_sf" ${K.sf?'checked':''}> La obra no tiene fecha (s. f.)</label>`;
+    a+=`<div class="fila">${K.sf?'':inp('k_anio','anio','Año','Ej.: 2024')}${inp('k_letra','letra','Letra (opcional)','Ej.: a','Solo si citas dos obras del mismo autor y año.')}</div>`;
+    return a;
+  };
+  const pagina=(req)=>`<div class="fila"><div class="f"><label for="k_loc">Ubicación</label>${sel('k_loc','loc',[['p.','Página'],['párr.','Párrafo (sin páginas)']])}</div>${inp('k_pag','pag',(K.loc==='p.'?'Número de página':'Número de párrafo')+(req?'':' (opcional)'),K.loc==='p.'?'Ej.: 15 o 15-16':'Ej.: 4')}</div>`;
+  if(K.sit==='parafrasis') h=autores()+pagina(false);
+  if(K.sit==='corta'||K.sit==='larga') h=autores()+`<div class="f"><label for="k_texto">Texto que copias, tal cual</label><textarea id="k_texto" data-c="texto" style="min-height:${K.sit==='larga'?160:90}px" placeholder="Ej.: citar bien es reconocer el trabajo de quienes investigaron antes que nosotros">${esc(K.texto)}</textarea><small class="cuenta" id="kCuenta">${palabras(K.texto)} palabras</small></div>`+pagina(true);
+  if(K.sit==='secundaria') h=`<div class="fila">${inp('k_oa','o_autor','Autor original (el que no leíste)','Ej.: Pérez')}${inp('k_oy','o_anio','Año original (si lo conoces)','Ej.: 1998')}</div><p class="ayuda" style="margin:4px 0 0;font-weight:800">Obra que sí leíste:</p>`+autores();
+  if(K.sit==='varias') h=`<div class="campos" id="kVarias">`+K.varias.map((v,i)=>`<div class="fuente-row"><div class="f"><label for="kv_a${i}">Autor ${i+1}</label><input type="text" id="kv_a${i}" data-v="${i}:autor" value="${esc(v.autor)}" placeholder="Ej.: Cantor Molina o Herrera et al."></div><div class="f"><label for="kv_y${i}">Año</label><input type="text" id="kv_y${i}" data-v="${i}:anio" value="${esc(v.anio)}" placeholder="Ej.: 2024"></div>${K.varias.length>2?`<button class="btn min" type="button" data-vq="${i}">Quitar</button>`:'<span></span>'}</div>`).join('')+`<div><button class="btn sec" type="button" id="kAdd">+ Agregar fuente</button></div></div>`;
+  if(K.sit==='personal') h=`<div class="fila">${inp('k_cpn','cp_nom','Nombres de la persona','Ej.: Nelson Mauricio')}${inp('k_cpa','cp_ap','Apellidos','Ej.: Cantor Molina')}</div>`+inp('k_cpf','cp_fecha','Fecha exacta de la comunicación','Ej.: 15 de marzo de 2024');
+  $('citaCampos').innerHTML=h;
+  pintarCita();
+}
+function pintarCita(){
+  const r=construirCita();
+  $('kPar').innerHTML=r.par; $('kNar').innerHTML=r.nar; $('kEj').innerHTML=r.ej;
+  $('boxNar').querySelector('small').textContent=K.sit==='larga'?'Narrativa (introduce el bloque)':'Narrativa';
+  $('kAv').innerHTML=r.av.map(a=>`<li>${a}</li>`).join('');
+  $('cEj').hidden=!kEjemplo;
+  const c=$('kCuenta'); if(c) c.textContent=`${palabras(K.texto)} palabras`;
+}
+$('sit').addEventListener('change',e=>{ if(e.target.name==='sit'){ K.sit=e.target.value; kEjemplo=false; pintarCitaForm(); } });
+const cf=$('citaCampos');
+cf.addEventListener('input',e=>{ const t=e.target;
+  if(t.dataset.c){ K[t.dataset.c]=t.type==='checkbox'?t.checked:t.value; }
+  if(t.dataset.v){ const [i,k]=t.dataset.v.split(':'); K.varias[i][k]=t.value; }
+  kEjemplo=false; pintarCita(); });
+cf.addEventListener('change',e=>{ const t=e.target;
+  if(t.id==='k_cuantos'||t.id==='k_loc'){ K[t.dataset.c]=t.value; pintarCitaForm(); }
+  if(t.id==='k_sf'){ K.sf=t.checked; pintarCitaForm(); }
+  if(t.id==='k_primera'){ K.primera=t.checked; pintarCita(); }
+  if(t.id==='k_sigla'){ pintarCitaForm(); }
+  kEjemplo=false; });
+cf.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+  if(b.id==='kAdd'){ K.varias.push({autor:'',anio:''}); pintarCitaForm(); }
+  if(b.dataset.vq){ K.varias.splice(+b.dataset.vq,1); pintarCitaForm(); } });
+document.querySelectorAll('[data-copyk]').forEach(b=>b.onclick=()=>{ const el=$(b.dataset.copyk); copiar(el.innerHTML,el.textContent,$('estCita')); });
+
+/* ---------- Inicio ---------- */
+mostrar(); pintarPaso(); revisar(); pintarCitaForm();
+</script>
+</body>
+</html>
