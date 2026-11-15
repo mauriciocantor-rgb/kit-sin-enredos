@@ -285,6 +285,7 @@ footer b{color:var(--texto)}
   <footer>
     <span><b>Mauricio Cantor</b> · Investiga, cita y escribe sin enredos</span>
     <span>Contacto: <span class="correo">nelsoncantor10@hotmail.com</span></span>
+    <span style="flex-basis:100%">Basado en <a href="https://apastyle.apa.org/" target="_blank" rel="noopener" style="color:var(--menta-d)">APA Style, 7.ª edición</a>, con la adaptación al español: “y” en lugar de “&amp;” y “s. f.” en lugar de “n.d.”.</span>
   </footer>
 </div>
 
@@ -484,7 +485,7 @@ function pintarPaso(){
     if(S.tipo==='articulo') c=campo('f_revista','Nombre de la revista',S.revista,'Va en cursiva, con mayúscula en cada palabra principal.','text','Ej.: Revista Ejemplo de Investigación')+
       `<div class="fila">${campo('f_volumen','Volumen',S.volumen,'','text','Ej.: 12')}${campo('f_numero','Número',S.numero,'','text','Ej.: 3')}${campo('f_paginas','Páginas',S.paginas,'','text','Ej.: 45-60')}</div>`+
       campo('f_doi','DOI',S.doi,'Pega el DOI como venga; se convierte en enlace https://doi.org/','text','Ej.: 10.1234/rei.2024.015')+campo('f_url','URL (solo si no hay DOI)',S.url,'','url','Ej.: https://www.ejemplo.org/articulo');
-    if(S.tipo==='libro') c=`<div class="fila">${campo('f_editorial','Editorial',S.editorial,'Sin "S.A." ni "Editorial".','text','Ej.: Ediciones Ejemplo')}${campo('f_edicion','Edición (número)',S.edicion,'Déjalo vacío si es la primera.','text','Ej.: 2')}</div>`+
+    if(S.tipo==='libro') c=`<div class="fila">${campo('f_editorial','Editorial',S.editorial,'Escríbela tal como aparece en la obra.','text','Ej.: Ediciones Ejemplo')}${campo('f_edicion','Edición (número)',S.edicion,'Déjalo vacío si es la primera.','text','Ej.: 2')}</div>`+
       campo('f_doi','DOI',S.doi,'','text','Ej.: 10.1234/abcd.2024')+campo('f_url','URL (solo si no hay DOI)',S.url,'','url','Ej.: https://www.ejemplo.org/articulo');
     if(S.tipo==='capitulo') c=campo('f_libro','Título del libro',S.libro,'','text','Ej.: Investigar en la universidad')+
       S.editores.map((e,i)=>`<div class="fila"><div class="f"><label for="ea${i}">Apellidos del editor ${i+1}</label><input type="text" id="ea${i}" data-editor="${i}:apellidos" value="${esc(e.apellidos)}" placeholder="Ej.: Cantor Molina"></div><div class="f"><label for="en${i}">Nombres del editor ${i+1}</label><input type="text" id="en${i}" data-editor="${i}:nombres" value="${esc(e.nombres)}" placeholder="Ej.: Nelson Mauricio"></div></div>`).join('')+
